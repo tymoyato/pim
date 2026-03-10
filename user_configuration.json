@@ -14,7 +14,14 @@
         "removable": true,
         "uki": false
     },
-    "custom_commands": [],
+    "custom_commands": [
+        "useradd -m builduser && echo 'builduser ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers",
+        "sudo -u builduser bash -c 'cd /tmp && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si --noconfirm'",
+        "sudo -u builduser yay -S --noconfirm bsdmainutils ncal brave-browser i3lock-fancy light rbenv nvm fisher difftastic nvim lazydocker || true",
+        "echo 'exec awesome' > /home/builduser/.xinitrc",
+        "echo '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx' >> /home/builduser/.bash_profile",
+        "chown builduser:builduser /home/builduser/.xinitrc /home/builduser/.bash_profile"
+    ],
     "disk_config": {
         "btrfs_options": {
             "snapshot_config": null
